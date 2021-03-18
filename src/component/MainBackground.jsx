@@ -1,19 +1,24 @@
 import React from 'react';
 import { Box, Image } from '@chakra-ui/react';
+import Header from './Header';
 
 const MainBackground = ({ children }) => (
   <Box
     width="100vw"
-    height="100vh"
+    minHeight="100vh"
     backgroundColor="violet.100"
   >
+    <Header />
     <Box
+      position="absolute"
       width="100vw"
-      height="100vh"
+      maxHeight="80vh"
+      zIndex={1}
+      overflowY="scroll"
     >
       {children}
     </Box>
-    <Image position="fixed" src="border-edge.png" width="100%" bottom="0px" />
+    <Image position="absolute" src="border-edge.png" width="100%" bottom="0px" />
   </Box>
 );
 
