@@ -8,11 +8,15 @@ const MainBackground = ({ children }) => (
     minHeight="100vh"
     backgroundColor="violet.100"
   >
-    <Header />
+    <Box width="100%" padding="10px 20px 10px 20px">
+      <Header />
+    </Box>
     <Box
       position="absolute"
-      width="100vw"
-      maxHeight="80vh"
+      width="100%"
+      padding="10px 20px 10px 20px"
+      maxHeight="82vh"
+      height="82vh"
       zIndex={1}
       overflowY="scroll"
     >

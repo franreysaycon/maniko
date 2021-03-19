@@ -6,17 +6,24 @@ import 'typeface-poppins';
 
 const theme = extendTheme({
   colors: {
-    fonts: {
-      body: 'Poppins, sans-serif',
-      heading: 'Poppins, sans-serif',
-      mono: 'Poppins, monospace',
-    },
-    fontSizes: {
-
-    },
     violet: {
       100: '#6D597A',
     },
+    red: {
+      100: '#B56576',
+      200: '#E56B6F',
+    },
+    orange: {
+      100: '#EAAC8B',
+    },
+    blue: {
+      100: '#355070',
+    },
+  },
+  fonts: {
+    body: 'Poppins, sans-serif',
+    heading: 'Poppins, sans-serif',
+    mono: 'Poppins, monospace',
   },
 });
 
