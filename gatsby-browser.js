@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import React from 'react';
-import MainBackground from './src/component/MainBackground';
+import ManikoPage from './src/component/ManikoPage';
 import 'typeface-poppins';
 
 const theme = extendTheme({
@@ -29,8 +29,8 @@ const theme = extendTheme({
 
 export const wrapPageElement = ({ element }) => (
   <ChakraProvider theme={theme} resetCSS>
-    <MainBackground>
+    <ManikoPage>
       {element}
-    </MainBackground>
+    </ManikoPage>
   </ChakraProvider>
 );
