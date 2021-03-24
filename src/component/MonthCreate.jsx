@@ -11,7 +11,7 @@ const MonthCreate = () => (
                 <FormLabel textTransform="uppercase" color="white">Month</FormLabel>
                 <Select bgColor="white">
                     {
-                        months.abbr.map( month => <option>{month}</option>)
+                        months.abbr.map( month => <option key={month}>{month}</option>)
                     }
                 </Select>            
             </FormControl>

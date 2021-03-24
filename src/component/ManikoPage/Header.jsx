@@ -3,7 +3,7 @@ import { useTheme } from '@emotion/react';
 import React from 'react';
 import { Menu } from 'react-feather';
 
-const Header = () => {
+const Header = ({ setSideBarOpen }) => {
   const theme = useTheme();
 
   return (
@@ -11,7 +11,7 @@ const Header = () => {
       display="flex"
       alignItems="center"
     >
-      <Menu color={theme.colors.white} size={50} />
+      <Menu color={theme.colors.white} size={50} onClick={() => setSideBarOpen(true)}/>
       <Text fontSize="50px" color="white" marginLeft="35px" position="relative" top="-7px">maniko</Text>
     </Box>
   );
