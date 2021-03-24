@@ -1,3 +1,3 @@
-import MonthCreate from '../component/MonthCreate'
+import MonthCreate from '../component/MonthCreate';
 
-export default MonthCreate
+export default MonthCreate;
