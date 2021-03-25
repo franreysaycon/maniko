@@ -3,6 +3,11 @@ import { v4 as uuidv4 } from 'uuid'
 
 const ManikoContext = createContext()
 
+const SCHEDULE = {
+    after15th: '15th',
+    after30th: '30th'
+}
+
 const ManikoReducer = (state, action) => {
     switch(action.type){
         case 'track.update':
@@ -14,11 +19,21 @@ const ManikoReducer = (state, action) => {
                 after30thSalary: action.payload.after30thSalary,
             }
         case 'transactions.add': 
-            return {
+            const transaction = action.payload.transaction
+            const template = action.payload.template
+
+            const newState = {
                 ...state,
-                transactions: [...state.transactions, action.payload.transaction],
-                templates: [...state.templates, action.payload.template],
+                after15thSalary: 
+                    transaction.schedule === SCHEDULE.after15th ? state.after15thSalary - transaction.value : state.after15thSalary,
+                after30thSalary: 
+                    transaction.schedule === SCHEDULE.after30th ? state.after30thSalary - transaction.value : state.after30thSalary,
+                transactions: state.transactions ? [...state.transactions, transaction] : [transaction],
             }
+            if(template){
+                newState.templates = state.templates ? [...state.templates, template] : [template]
+            }
+            return newState
         default:
             return state
     }
@@ -55,6 +70,7 @@ const ManikoProvider = ({ children }) => {
     }
 
     const updateTransactions = (transaction) => {
+        console.log(transaction)
         const entry = {
             id: uuidv4(),
             ...transaction

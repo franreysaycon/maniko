@@ -25,7 +25,7 @@ const TransactionCreateModal = ({ isOpen, onClose }) => {
     onClose()
   }
 
-  console.log(errors)
+  console.log(templates)
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -39,34 +39,36 @@ const TransactionCreateModal = ({ isOpen, onClose }) => {
               <FormLabel textTransform="uppercase">Choose From Template</FormLabel>
               <Select borderColor="black" ref={register({ required: true })}>
                 {
-                  templates.map( temp => <option>{temp}</option>)
+                  templates.map( ({ id, name }) => <option key={id}>{name}</option>)
                 }
               </Select>
             </FormControl>
           }
           <FormControl id="name" mb="15px">
             <FormLabel textTransform="uppercase">Name</FormLabel>
-            <Input type="text" ref={register({ required: true, maxLength: 30 })} />
+            <Input type="text" name="name" ref={register({ required: true, maxLength: 30 })} />
+            {errors.after30thSalary && <FormHelperText color="red.300">There should be a name less than 30 characters.</FormHelperText> }
           </FormControl>
           <FormControl id="amount" mb="15px">
             <FormLabel textTransform="uppercase">Amount</FormLabel>
-            <Input type="number" ref={register({ required: true, maxLength: 30 })} />
+            <Input type="number" name="value" ref={register({ required: true, min: 1 })} />
+            {errors.after30thSalary && <FormHelperText color="red.300">Value should be greater than 0.</FormHelperText> }
           </FormControl>
           <FormControl id="schedule" mb="15px">
             <FormLabel textTransform="uppercase">Schedule</FormLabel>
-            <Select ref={register}>
-              <option selected={true}>AFTER 30TH</option>
-              <option>AFTER 15TH</option>
+            <Select name="schedule" ref={register}>
+              <option selected={true} value="30th">AFTER 30TH</option>
+              <option value="15th">AFTER 15TH</option>
             </Select>
           </FormControl>
           <FormControl id="schedule" mb="15px">
             <FormLabel textTransform="uppercase">Transaction Type</FormLabel>
-            <Select ref={register}>
-              <option selected={true}>CASH</option>
-              <option>CREDIT</option>
+            <Select name="type" ref={register}>
+              <option selected={true} value="cash">CASH</option>
+              <option value="credit">CREDIT</option>
             </Select>
           </FormControl>
-          <Checkbox defaultIsChecked ref={register}>
+          <Checkbox name="isTemplate" ref={register}>
             Save as Template
           </Checkbox>
         </ModalBody>

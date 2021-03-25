@@ -22,9 +22,9 @@ const MonthTransactions = ({ transactions }) => (
     >
       {
         transactions && transactions.map(({
-          type, monthHalf, name, value,
+          id, type, schedule, name, value,
         }) => (
-          <Transaction type={type} monthHalf={monthHalf} name={name} value={value} />
+          <Transaction key={id} type={type} schedule={schedule} name={name} value={value} />
         ))
     }
     </Box>
