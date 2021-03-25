@@ -10,6 +10,8 @@ const ManikoReducer = (state, action) => {
                 ...state,
                 month: action.payload.month,
                 year: action.payload.year,
+                after15thSalary: action.payload.after15thSalary,
+                after30thSalary: action.payload.after30thSalary,
             }
         case 'transactions.add': 
             return {
