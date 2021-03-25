@@ -19,58 +19,61 @@ import { useForm } from "react-hook-form"
 
 const TransactionCreateModal = ({ isOpen, onClose }) => {
   const { templates, updateTransactions } = useManikoStore()
-  const { register, handleSubmit, errors } = useForm()
+  const { register, handleSubmit, watch, errors } = useForm()
   const onSubmit = data => {
     updateTransactions(data)
     onClose()
   }
-
-  console.log(templates)
+  const chosenTemplate = templates.find((template) => watch("template") === template.id)
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent mt="25px" mb="0px">
         <ModalHeader>Create Transaction</ModalHeader>
         <ModalCloseButton onClick={onClose} />
-        <ModalBody m="10px">
+        <ModalBody>
           { templates &&
-            <FormControl id="template">
+            <FormControl id="template" mb="15px">
               <FormLabel textTransform="uppercase">Choose From Template</FormLabel>
-              <Select borderColor="black" ref={register({ required: true })}>
+              <Select name="template" borderColor="black" ref={register({ required: true })}>
+                <option disabled selected value>Choose a Template</option>
                 {
-                  templates.map( ({ id, name }) => <option key={id}>{name}</option>)
+                  templates.map( ({ id, name }) => <option key={id} value={id}>{name}</option>)
                 }
               </Select>
             </FormControl>
           }
           <FormControl id="name" mb="15px">
             <FormLabel textTransform="uppercase">Name</FormLabel>
-            <Input type="text" name="name" ref={register({ required: true, maxLength: 30 })} />
+            <Input type="text" name="name" value={chosenTemplate && chosenTemplate.name} ref={register({ required: true, maxLength: 30 })} />
             {errors.after30thSalary && <FormHelperText color="red.300">There should be a name less than 30 characters.</FormHelperText> }
           </FormControl>
           <FormControl id="amount" mb="15px">
             <FormLabel textTransform="uppercase">Amount</FormLabel>
-            <Input type="number" name="value" ref={register({ required: true, min: 1 })} />
+            <Input type="number" name="value" value={chosenTemplate && chosenTemplate.value} ref={register({ required: true, min: 1 })} />
             {errors.after30thSalary && <FormHelperText color="red.300">Value should be greater than 0.</FormHelperText> }
           </FormControl>
           <FormControl id="schedule" mb="15px">
             <FormLabel textTransform="uppercase">Schedule</FormLabel>
-            <Select name="schedule" ref={register}>
+            <Select name="schedule" ref={register} value={chosenTemplate && chosenTemplate.schedule}>
               <option selected={true} value="30th">AFTER 30TH</option>
               <option value="15th">AFTER 15TH</option>
             </Select>
           </FormControl>
           <FormControl id="schedule" mb="15px">
             <FormLabel textTransform="uppercase">Transaction Type</FormLabel>
-            <Select name="type" ref={register}>
+            <Select name="type" ref={register} value={chosenTemplate && chosenTemplate.type}>
               <option selected={true} value="cash">CASH</option>
               <option value="credit">CREDIT</option>
             </Select>
           </FormControl>
-          <Checkbox name="isTemplate" ref={register}>
-            Save as Template
-          </Checkbox>
+          {
+            !chosenTemplate &&
+            <Checkbox name="isTemplate" ref={register}>
+              Save as Template
+            </Checkbox>
+          }
         </ModalBody>
         <ModalFooter>
           <Button bgColor="red.100" mr={3} onClick={handleSubmit(onSubmit)} color="white">Create</Button>

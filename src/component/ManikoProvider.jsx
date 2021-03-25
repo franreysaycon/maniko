@@ -28,10 +28,10 @@ const ManikoReducer = (state, action) => {
                     transaction.schedule === SCHEDULE.after15th ? state.after15thSalary - transaction.value : state.after15thSalary,
                 after30thSalary: 
                     transaction.schedule === SCHEDULE.after30th ? state.after30thSalary - transaction.value : state.after30thSalary,
-                transactions: state.transactions ? [...state.transactions, transaction] : [transaction],
+                transactions: state.transactions ? [transaction, ...state.transactions] : [transaction],
             }
             if(template){
-                newState.templates = state.templates ? [...state.templates, template] : [template]
+                newState.templates = state.templates ? [template, ...state.templates] : [template]
             }
             return newState
         default:
