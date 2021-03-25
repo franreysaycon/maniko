@@ -22,6 +22,17 @@ module.exports = {
       __key: 'images',
     },
     '@chakra-ui/gatsby-plugin',
-    'gatsby-plugin-offline'
+    'gatsby-plugin-offline',
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Maniko - Track Your PH Salary`,
+        short_name: `Maniko`,
+        start_url: `/`,
+        background_color: `#6D597A`,
+        theme_color: `#FFFFFF`,
+        display: `standalone`,
+      },
+    },
   ],
 };
