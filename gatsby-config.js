@@ -23,5 +23,6 @@ module.exports = {
       __key: 'images',
     },
     '@chakra-ui/gatsby-plugin',
+    'gatsby-plugin-offline'
   ],
 };
