@@ -24,7 +24,7 @@ const TransactionCreateModal = ({ isOpen, onClose }) => {
     updateTransactions(data)
     onClose()
   }
-  const chosenTemplate = templates.find((template) => watch("template") === template.id)
+  const chosenTemplate = !!templates ? templates.find((template) => watch("template") === template.id) : null
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
