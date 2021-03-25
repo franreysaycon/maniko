@@ -59,7 +59,7 @@ const TransactionCreateModal = ({ isOpen, onClose, templates }) => (
         </Checkbox>
       </ModalBody>
       <ModalFooter>
-        <Button bgColor="red.100" mr={3} onClick={onClose} color="white">Close</Button>
+        <Button bgColor="red.100" mr={3} onClick={onClose} color="white">Create</Button>
       </ModalFooter>
     </ModalContent>
   </Modal>
