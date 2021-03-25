@@ -3,6 +3,7 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import React from 'react';
 import ManikoPage from './src/component/ManikoPage';
 import 'typeface-poppins';
+import ManikoProvider from './src/component/ManikoProvider';
 
 const theme = extendTheme({
   colors: {
@@ -29,8 +30,10 @@ const theme = extendTheme({
 
 export const wrapPageElement = ({ element }) => (
   <ChakraProvider theme={theme} resetCSS>
-    <ManikoPage>
-      {element}
-    </ManikoPage>
+    <ManikoProvider>
+      <ManikoPage>
+        {element}
+      </ManikoPage>
+    </ManikoProvider>
   </ChakraProvider>
 );

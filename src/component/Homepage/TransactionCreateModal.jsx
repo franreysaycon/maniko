@@ -21,7 +21,7 @@ const TransactionCreateModal = ({ isOpen, onClose, templates }) => (
     <ModalContent>
       <ModalHeader>Create Transaction</ModalHeader>
       <ModalCloseButton onClick={onClose} />
-      <ModalBody>
+      <ModalBody m="10px">
         { templates &&
           <FormControl id="template">
             <FormLabel textTransform="uppercase">Choose From Template</FormLabel>
