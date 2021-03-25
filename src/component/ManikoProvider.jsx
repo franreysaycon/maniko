@@ -40,11 +40,16 @@ const ManikoReducer = (state, action) => {
 }
 
 const prepopulateStore = () => {
-    return JSON.parse(localStorage.getItem('store')) || {}
+    if(typeof window !== 'undefined'){
+        return JSON.parse(localStorage.getItem('store')) || {}
+    }
+    return {}
 }
 
 const persistStore = (store) => {
-    localStorage.setItem('store', JSON.stringify(store))
+    if(typeof window !== 'undefined'){
+        localStorage.setItem('store', JSON.stringify(store))
+    }
 }
 
 const ManikoProvider = ({ children }) => {
