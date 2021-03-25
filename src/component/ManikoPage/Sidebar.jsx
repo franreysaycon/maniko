@@ -2,13 +2,17 @@ import React, { useRef } from 'react'
 import { Box } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import useClickOutside from '../../hooks/useClickOutside'
+import { Link } from 'gatsby'
+import { useLocation } from '@reach/router'
 
 const Container = motion(Box)
 const SidebarContainer = motion(Box)
 
 const Sidebar = ({ onClose }) => {
     const sidebarRef = useRef()
+    const location = useLocation()
     useClickOutside(sidebarRef, onClose)
+    console.log(location)
 
     return (
         <Container
@@ -38,8 +42,12 @@ const Sidebar = ({ onClose }) => {
                 zIndex="11"
                 bgColor="red.100"
             >
-                <Box p="10px 10px 10px 20px" w="100%" fontSize="xl" color="white" bgColor="red.200">Home</Box>
-                <Box p="10px 10px 10px 20px" w="100%" fontSize="xl" color="white">Template</Box>
+                <Link to="/" onClick={onClose}>
+                    <Box p="10px 10px 10px 20px" w="100%" fontSize="xl" color="white" bgColor={location.pathname === '/' ? 'red.200': 'red.100'}>Home</Box>
+                </Link>
+                <Link to="/templates" onClick={onClose}>
+                    <Box p="10px 10px 10px 20px" w="100%" fontSize="xl" color="white" bgColor={location.pathname === '/templates' ? 'red.200': 'red.100'}>Template</Box>
+                </Link>
             </SidebarContainer>
         </Container>
     )
