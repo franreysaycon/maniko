@@ -36,6 +36,7 @@ const ManikoProvider = ({ children }) => {
 
     const [store, dispatch] = useReducer(ManikoReducer, prepopulateStore())
     const firstMount = useRef(false)
+    const trackIsReady = !!store.month && !!store.year
 
     useEffect(() => {
         if(firstMount.current){
@@ -46,13 +47,10 @@ const ManikoProvider = ({ children }) => {
         }
     }, [store])
 
-    const updateTrack = (month, year) => {
+    const updateTrack = (payload) => {
         dispatch({
             type: 'track.update',
-            payload: {
-                month,
-                year,
-            }
+            payload
         })
     }
 
@@ -77,7 +75,7 @@ const ManikoProvider = ({ children }) => {
     }
 
     return (
-        <ManikoContext.Provider value={{ ...store, updateTrack, updateTransactions }}>
+        <ManikoContext.Provider value={{ ...store, updateTrack, updateTransactions, trackIsReady }}>
             {children}
         </ManikoContext.Provider>
     )

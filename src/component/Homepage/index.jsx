@@ -8,15 +8,15 @@ import { useManikoStore } from '../ManikoProvider';
 import { navigate } from 'gatsby';
 
 const Homepage = () => {
-  const { month, year, after15thSalary, after30thSalary, transactions } = useManikoStore()
+  const { month, year, after15thSalary, after30thSalary, transactions, trackIsReady } = useManikoStore()
 
   useEffect(() => {
-    if(!month && !year){
+    if(!trackIsReady){
       navigate('/create')
     }
-  }, [month, year])
+  }, [trackIsReady])
 
-  if(!month && !year){
+  if(!trackIsReady){
     return <></>
   }
 
