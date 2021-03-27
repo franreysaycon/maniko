@@ -4,7 +4,7 @@ import TemplateItem from './TemplateItem';
 import { useManikoStore } from '../ManikoProvider';
 
 const Templates = () => {
-  const { templates } = useManikoStore();
+  const { templates, deleteTemplate } = useManikoStore();
   return (
     <Box h="100%" d="flex" flexDir="column">
       <Text textTransform="uppercase" fontSize="xl" color="white">Templates</Text>
@@ -22,7 +22,13 @@ const Templates = () => {
         }}
       >
         {
-            templates && templates.map((d) => <TemplateItem key={d.id} {...d} />)
+          templates && templates.map((d) => (
+            <TemplateItem
+              key={d.id}
+              deleteTemplate={deleteTemplate}
+              {...d}
+            />
+          ))
         }
       </Box>
     </Box>

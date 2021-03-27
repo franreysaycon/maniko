@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Button, Text } from '@chakra-ui/react';
 import { useLongPress } from 'use-long-press';
+import { motion } from 'framer-motion';
+
+const DeleteBox = motion(Box);
 
 const Transaction = ({
   id, type, schedule, name, value, deleteTransaction,
@@ -24,7 +27,7 @@ const Transaction = ({
       </Box>
       {
         openDelete && (
-          <Box
+          <DeleteBox
             borderRadius="15px"
             left="0"
             bgColor="rgba(0, 0, 0, 0.6)"
@@ -36,10 +39,16 @@ const Transaction = ({
             d="flex"
             alignItems="center"
             justifyContent="space-evenly"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              ease: 'easeIn',
+              duration: 0.2,
+            }}
           >
             <Button bgColor="red.100" onClick={deleteThis} color="white">Delete</Button>
             <Button onClick={() => setOpenDelete(false)}>Cancel</Button>
-          </Box>
+          </DeleteBox>
         )
       }
     </Box>

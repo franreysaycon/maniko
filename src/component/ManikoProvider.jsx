@@ -54,6 +54,13 @@ const ManikoReducer = (state, action) => {
         transactions: state.transactions.filter((tran) => tran.id !== transaction.id),
       };
     }
+    case 'template.delete': {
+      const template = state.templates.find((t) => t.id === action.payload.templateId);
+      return {
+        ...state,
+        templates: state.templates.filter((temp) => temp.id !== template.id),
+      };
+    }
     case 'track.clear':
       return {};
     default:
@@ -129,9 +136,24 @@ const ManikoProvider = ({ children }) => {
     });
   };
 
+  const deleteTemplate = (id) => {
+    dispatch({
+      type: 'template.delete',
+      payload: {
+        templateId: id,
+      },
+    });
+  };
+
   return (
     <ManikoContext.Provider value={{
-      ...store, updateTrack, updateTransactions, deleteTransaction, clearTrack, trackIsReady,
+      ...store,
+      updateTrack,
+      updateTransactions,
+      deleteTransaction,
+      deleteTemplate,
+      clearTrack,
+      trackIsReady,
     }}
     >
       {children}
