@@ -16,6 +16,7 @@ module.exports = {
   },
   plugins: [
     'react',
+    'eslint-plugin-prettier',
   ],
   rules: {
     'react/jsx-filename-extension': 'off',
