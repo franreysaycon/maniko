@@ -1,3 +1,3 @@
-import Templates from '../component/Templates'
+import Templates from '../component/Templates';
 
-export default Templates
+export default Templates;

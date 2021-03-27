@@ -1,11 +1,13 @@
 import React from 'react';
-import { Box, Button, useDisclosure, useTheme } from '@chakra-ui/react';
+import {
+  Box, Button, useDisclosure, useTheme,
+} from '@chakra-ui/react';
 import { Filter } from 'react-feather';
 import TransactionCreateModal from './TransactionCreateModal';
 
 const MonthFooter = () => {
   const theme = useTheme();
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Box h="10%" d="flex" alignItems="flex-end" justifyContent="space-evenly">

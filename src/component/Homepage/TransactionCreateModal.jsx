@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -12,19 +12,22 @@ import {
   Select,
   Input,
   Button,
-  Checkbox
-} from "@chakra-ui/react"
-import { useManikoStore } from '../ManikoProvider'
-import { useForm } from "react-hook-form"
+  Checkbox,
+  FormHelperText,
+} from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
+import { useManikoStore } from '../ManikoProvider';
 
 const TransactionCreateModal = ({ isOpen, onClose }) => {
-  const { templates, updateTransactions } = useManikoStore()
-  const { register, handleSubmit, watch, errors } = useForm()
-  const onSubmit = data => {
-    updateTransactions(data)
-    onClose()
-  }
-  const chosenTemplate = !!templates ? templates.find((template) => watch("template") === template.id) : null
+  const { templates, updateTransactions } = useManikoStore();
+  const {
+    register, handleSubmit, watch, errors,
+  } = useForm();
+  const onSubmit = (data) => {
+    updateTransactions(data);
+    onClose();
+  };
+  const chosenTemplate = templates ? templates.find((template) => watch('template') === template.id) : null;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -33,17 +36,18 @@ const TransactionCreateModal = ({ isOpen, onClose }) => {
         <ModalHeader>Create Transaction</ModalHeader>
         <ModalCloseButton onClick={onClose} />
         <ModalBody>
-          { templates &&
+          { templates
+            && (
             <FormControl id="template" mb="15px">
               <FormLabel textTransform="uppercase">Choose From Template</FormLabel>
               <Select name="template" borderColor="black" ref={register({ required: true })}>
                 <option disabled selected value>Choose a Template</option>
                 {
-                  templates.map( ({ id, name }) => <option key={id} value={id}>{name}</option>)
+                  templates.map(({ id, name }) => <option key={id} value={id}>{name}</option>)
                 }
               </Select>
             </FormControl>
-          }
+            )}
           <FormControl id="name" mb="15px">
             <FormLabel textTransform="uppercase">Name</FormLabel>
             <Input type="text" name="name" value={chosenTemplate && chosenTemplate.name} ref={register({ required: true, maxLength: 30 })} />
@@ -57,22 +61,24 @@ const TransactionCreateModal = ({ isOpen, onClose }) => {
           <FormControl id="schedule" mb="15px">
             <FormLabel textTransform="uppercase">Schedule</FormLabel>
             <Select name="schedule" ref={register} value={chosenTemplate && chosenTemplate.schedule}>
-              <option selected={true} value="30th">AFTER 30TH</option>
+              <option selected value="30th">AFTER 30TH</option>
               <option value="15th">AFTER 15TH</option>
             </Select>
           </FormControl>
           <FormControl id="schedule" mb="15px">
             <FormLabel textTransform="uppercase">Transaction Type</FormLabel>
             <Select name="type" ref={register} value={chosenTemplate && chosenTemplate.type}>
-              <option selected={true} value="cash">CASH</option>
+              <option selected value="cash">CASH</option>
               <option value="credit">CREDIT</option>
             </Select>
           </FormControl>
           {
-            !chosenTemplate &&
+            !chosenTemplate
+            && (
             <Checkbox name="isTemplate" ref={register}>
               Save as Template
             </Checkbox>
+            )
           }
         </ModalBody>
         <ModalFooter>
@@ -80,6 +86,6 @@ const TransactionCreateModal = ({ isOpen, onClose }) => {
         </ModalFooter>
       </ModalContent>
     </Modal>
-  )
-}
-export default TransactionCreateModal
+  );
+};
+export default TransactionCreateModal;

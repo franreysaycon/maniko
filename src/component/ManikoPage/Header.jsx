@@ -11,7 +11,7 @@ const Header = ({ setSideBarOpen }) => {
       display="flex"
       alignItems="center"
     >
-      <Menu color={theme.colors.white} size={50} onClick={() => setSideBarOpen(true)}/>
+      <Menu color={theme.colors.white} size={50} onClick={() => setSideBarOpen(true)} />
       <Text fontSize="50px" color="white" marginLeft="35px" position="relative" top="-7px">maniko</Text>
     </Box>
   );

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Box, Image } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
+import { AnimatePresence } from 'framer-motion';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import { AnimatePresence } from 'framer-motion';
 
 const ManikoPage = ({ children }) => {
-  const [sideBarOpen, setSideBarOpen] = useState(false)
+  const [sideBarOpen, setSideBarOpen] = useState(false);
 
   return (
     <>
@@ -19,11 +19,11 @@ const ManikoPage = ({ children }) => {
       </Box>
       <AnimatePresence>
         {
-          sideBarOpen && <Sidebar onClose={() => setSideBarOpen(false)}/>
+          sideBarOpen && <Sidebar onClose={() => setSideBarOpen(false)} />
         }
       </AnimatePresence>
     </>
   );
-}
+};
 
 export default ManikoPage;
