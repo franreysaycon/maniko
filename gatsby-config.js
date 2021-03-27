@@ -31,7 +31,7 @@ module.exports = {
         start_url: '/',
         background_color: '#6D597A',
         theme_color: '#FFFFFF',
-        display: 'standalone',
+        display: 'fullscreen',
         icon: 'src/images/icon.png',
       },
     },
