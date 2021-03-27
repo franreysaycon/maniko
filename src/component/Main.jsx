@@ -38,4 +38,4 @@ const Main = ({ children }) => (
   </ChakraProvider>
 );
 
-export default Main
+export default Main;

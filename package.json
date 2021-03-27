@@ -40,6 +40,7 @@
     "react-feather": "^2.0.9",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^6.15.5",
+    "recharts": "^2.0.9",
     "typeface-poppins": "^1.1.13",
     "uuid": "^8.3.2"
   },
