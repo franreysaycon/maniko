@@ -17,52 +17,41 @@ import {
 import { useManikoStore } from '../ManikoProvider';
 
 const LEGEND_NAME = {
-  cashAfter15th: 'Cash After 15th',
-  creditAfter15th: 'Credit After 15th',
-  cashAfter30th: 'Cash After 30th',
-  creditAfter30th: 'Credit After 30th',
+  cash: 'Cash Expense',
+  credit: 'Credit Expense',
+  savings: 'Savings',
 };
 
 const generateData = (transactions) => {
   const result = {
-    cashAfter15th: 0,
-    creditAfter15th: 0,
-    cashAfter30th: 0,
-    creditAfter30th: 0,
+    cash: 0,
+    credit: 0,
+    savings: 0,
   };
 
   if (transactions) {
     transactions.forEach((tran) => {
-      if (tran.schedule === '15th' && tran.type === 'cash') {
-        result.cashAfter15th += +tran.value;
-      } else if (tran.schedule === '15th' && tran.type === 'credit') {
-        result.creditAfter15th += +tran.value;
-      } else if (tran.schedule === '30th' && tran.type === 'cash') {
-        result.cashAfter30th += +tran.value;
-      } else {
-        result.creditAfter30th += +tran.value;
+      if (tran.type === 'cash') {
+        result.cash += +tran.value;
+      } else if (tran.type === 'credit') {
+        result.credit += +tran.value;
+      } else if (tran.type === 'savings') {
+        result.savings += +tran.value;
       }
     });
   }
 
-  const data = Object.keys(result).map((k) => (
+  return Object.keys(result).map((k) => (
     { name: LEGEND_NAME[k], value: result[k] }
   )).filter((item) => item.value > 0);
-
-  const totalData = [
-    { name: 'Total Credit Transactions', value: result.creditAfter15th + result.creditAfter30th },
-    { name: 'Total Cash Transactions', value: result.cashAfter15th + result.cashAfter30th },
-  ];
-
-  return { data, totalData };
 };
 
 const StatisticsModal = ({ isOpen, onClose }) => {
-  const { transactions } = useManikoStore();
+  const { after15thSalary, after30thSalary, transactions } = useManikoStore();
   const theme = useTheme();
 
   const RADIAN = Math.PI / 180;
-  const COLORS = [theme.colors.blue['100'], theme.colors.violet['100'], theme.colors.red['100'], theme.colors.orange['100']];
+  const COLORS = [theme.colors.red['100'], theme.colors.violet['100'], theme.colors.blue['100']];
   const renderCustomizedLabel = ({
     cx, cy, midAngle, innerRadius, outerRadius, percent,
   }) => {
@@ -77,7 +66,7 @@ const StatisticsModal = ({ isOpen, onClose }) => {
     );
   };
 
-  const { data, totalData } = generateData(transactions);
+  const data = generateData(transactions);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -85,9 +74,9 @@ const StatisticsModal = ({ isOpen, onClose }) => {
       <ModalContent mt="25px" mb="0px">
         <ModalHeader>Transaction Statistics</ModalHeader>
         <ModalCloseButton onClick={onClose} />
-        <ModalBody>
-          <Box d="flex" alignItems="center" justifyContent="center" mb="15px">
-            <PieChart width={500} height={250}>
+        <ModalBody overflowY="scroll" h="400px">
+          <Box d="flex" alignItems="flex-start" justifyContent="center">
+            <PieChart width={400} height={300}>
               <Pie
                 data={data}
                 cx="50%"
@@ -102,25 +91,21 @@ const StatisticsModal = ({ isOpen, onClose }) => {
                   <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Legend verticalAlign="top" height={36} />
+              <Legend verticalAlign="left" align="left" height={50} wrapperStyle={{ width: 200, whiteSpace: 'break-spaces', marginLeft: '30px' }} />
             </PieChart>
           </Box>
           {
             data.map((d) => (
               <Box textTransform="uppercase" fontSize="sm">
-                {`${d.name}:`}
+                {`Total ${d.name}:`}
                 <Box as="text" fontWeight="bold">{` PHP ${d.value}`}</Box>
               </Box>
             ))
           }
-          {
-            totalData.map((d) => (
-              <Box textTransform="uppercase" fontSize="sm">
-                {`${d.name}:`}
-                <Box as="text" fontWeight="bold">{` PHP ${d.value}`}</Box>
-              </Box>
-            ))
-          }
+          <Box textTransform="uppercase" fontSize="md" color="red.100" mt="15px">
+            Total Budget Left:
+            <Box as="text" fontWeight="bold">{` PHP ${+after15thSalary + +after30thSalary}`}</Box>
+          </Box>
         </ModalBody>
         <ModalFooter>
           <Button bgColor="red.100" mr={3} onClick={onClose} color="white">Close</Button>

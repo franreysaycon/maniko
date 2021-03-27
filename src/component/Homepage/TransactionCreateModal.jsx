@@ -41,7 +41,7 @@ const TransactionCreateModal = ({ isOpen, onClose }) => {
             <FormControl id="template" mb="15px">
               <FormLabel textTransform="uppercase">Choose From Template</FormLabel>
               <Select name="template" borderColor="black" ref={register({ required: true })}>
-                <option disabled>Choose a Template</option>
+                <option disabled selected>Choose a Template</option>
                 {
                   templates.map(({ id, name }) => <option key={id} value={id}>{name}</option>)
                 }
@@ -68,8 +68,9 @@ const TransactionCreateModal = ({ isOpen, onClose }) => {
           <FormControl id="schedule" mb="15px">
             <FormLabel textTransform="uppercase">Transaction Type</FormLabel>
             <Select name="type" ref={register} value={chosenTemplate && chosenTemplate.type} onChange={() => {}}>
-              <option value="cash">CASH</option>
-              <option value="credit">CREDIT</option>
+              <option value="cash">CASH EXPENSE</option>
+              <option value="credit">CREDIT EXPENSE</option>
+              <option value="savings">SAVINGS</option>
             </Select>
           </FormControl>
           {
