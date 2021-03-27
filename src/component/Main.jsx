@@ -26,6 +26,14 @@ const theme = extendTheme({
     heading: 'Poppins, sans-serif',
     mono: 'Poppins, monospace',
   },
+  styles: {
+    global: {
+      body: {
+        userSelect: 'none',
+        '-webkit-touch-callout': 'none',
+      },
+    },
+  },
 });
 
 const Main = ({ children }) => (
