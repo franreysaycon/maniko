@@ -9,7 +9,14 @@ import { useManikoStore } from '../ManikoProvider';
 
 const Homepage = () => {
   const {
-    month, year, after15thSalary, after30thSalary, transactions, trackIsReady,
+    month,
+    year,
+    original15th,
+    original30th,
+    after15thSalary,
+    after30thSalary,
+    transactions,
+    trackIsReady,
   } = useManikoStore();
 
   useEffect(() => {
@@ -25,7 +32,12 @@ const Homepage = () => {
   return (
     <Box h="100%" d="flex" flexDir="column">
       <MonthHeader month={month} year={year} />
-      <MonthStatistics after15thSalary={after15thSalary} after30thSalary={after30thSalary} />
+      <MonthStatistics
+        original15th={original15th}
+        original30th={original30th}
+        after15thSalary={after15thSalary}
+        after30thSalary={after30thSalary}
+      />
       <MonthTransactions transactions={transactions} />
       <MonthFooter />
     </Box>

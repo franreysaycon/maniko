@@ -17,6 +17,8 @@ const ManikoReducer = (state, action) => {
         ...state,
         month: action.payload.month,
         year: action.payload.year,
+        original15th: action.payload.after15thSalary,
+        original30th: action.payload.after30thSalary,
         after15thSalary: action.payload.after15thSalary,
         after30thSalary: action.payload.after30thSalary,
       };

@@ -41,33 +41,35 @@ const TransactionCreateModal = ({ isOpen, onClose }) => {
             <FormControl id="template" mb="15px">
               <FormLabel textTransform="uppercase">Choose From Template</FormLabel>
               <Select name="template" borderColor="black" ref={register({ required: true })}>
-                <option disabled selected value>Choose a Template</option>
+                <option disabled selected>Choose a Template</option>
                 {
-                  templates.map(({ id, name }) => <option key={id} value={id}>{name}</option>)
+                  templates.map(({ id, name }) => (
+                    <option key={id} defaultValue={id}>{name}</option>
+                  ))
                 }
               </Select>
             </FormControl>
             )}
           <FormControl id="name" mb="15px">
             <FormLabel textTransform="uppercase">Name</FormLabel>
-            <Input type="text" name="name" value={chosenTemplate && chosenTemplate.name} ref={register({ required: true, maxLength: 30 })} />
+            <Input type="text" name="name" defaultValue={chosenTemplate && chosenTemplate.name} ref={register({ required: true, maxLength: 30 })} />
             {errors.after30thSalary && <FormHelperText color="red.300">There should be a name less than 30 characters.</FormHelperText> }
           </FormControl>
           <FormControl id="amount" mb="15px">
             <FormLabel textTransform="uppercase">Amount</FormLabel>
-            <Input type="number" name="value" value={chosenTemplate && chosenTemplate.value} ref={register({ required: true, min: 1 })} />
+            <Input type="number" name="value" defaultValue={chosenTemplate && chosenTemplate.value} ref={register({ required: true, min: 1 })} />
             {errors.after30thSalary && <FormHelperText color="red.300">Value should be greater than 0.</FormHelperText> }
           </FormControl>
           <FormControl id="schedule" mb="15px">
             <FormLabel textTransform="uppercase">Schedule</FormLabel>
-            <Select name="schedule" ref={register} value={chosenTemplate && chosenTemplate.schedule}>
+            <Select name="schedule" ref={register} defaultValue={chosenTemplate && chosenTemplate.schedule}>
               <option selected value="30th">AFTER 30TH</option>
               <option value="15th">AFTER 15TH</option>
             </Select>
           </FormControl>
           <FormControl id="schedule" mb="15px">
             <FormLabel textTransform="uppercase">Transaction Type</FormLabel>
-            <Select name="type" ref={register} value={chosenTemplate && chosenTemplate.type}>
+            <Select name="type" ref={register} defaultValue={chosenTemplate && chosenTemplate.type}>
               <option selected value="cash">CASH</option>
               <option value="credit">CREDIT</option>
             </Select>
