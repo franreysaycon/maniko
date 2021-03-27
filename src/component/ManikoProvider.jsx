@@ -22,7 +22,7 @@ const ManikoReducer = (state, action) => {
         after15thSalary: action.payload.after15thSalary,
         after30thSalary: action.payload.after30thSalary,
       };
-    case 'transactions.add': {
+    case 'transaction.add': {
       const { transaction } = action.payload;
       const { template } = action.payload;
 
@@ -30,16 +30,29 @@ const ManikoReducer = (state, action) => {
         ...state,
         after15thSalary:
             transaction.schedule === SCHEDULE.after15th
-              ? state.after15thSalary - transaction.value : state.after15thSalary,
+              ? +state.after15thSalary - +transaction.value : +state.after15thSalary,
         after30thSalary:
             transaction.schedule === SCHEDULE.after30th
-              ? state.after30thSalary - transaction.value : state.after30thSalary,
+              ? +state.after30thSalary - +transaction.value : +state.after30thSalary,
         transactions: state.transactions ? [transaction, ...state.transactions] : [transaction],
       };
       if (template) {
         newState.templates = state.templates ? [template, ...state.templates] : [template];
       }
       return newState;
+    }
+    case 'transaction.delete': {
+      const transaction = state.transactions.find((t) => t.id === action.payload.transactionId);
+      return {
+        ...state,
+        after15thSalary:
+          transaction.schedule === SCHEDULE.after15th
+            ? +state.after15thSalary + +transaction.value : +state.after15thSalary,
+        after30thSalary:
+          transaction.schedule === SCHEDULE.after30th
+            ? +state.after30thSalary + +transaction.value : +state.after30thSalary,
+        transactions: state.transactions.filter((tran) => tran.id !== transaction.id),
+      };
     }
     case 'track.clear':
       return {};
@@ -102,14 +115,23 @@ const ManikoProvider = ({ children }) => {
     }
 
     dispatch({
-      type: 'transactions.add',
+      type: 'transaction.add',
       payload,
+    });
+  };
+
+  const deleteTransaction = (id) => {
+    dispatch({
+      type: 'transaction.delete',
+      payload: {
+        transactionId: id,
+      },
     });
   };
 
   return (
     <ManikoContext.Provider value={{
-      ...store, updateTrack, updateTransactions, clearTrack, trackIsReady,
+      ...store, updateTrack, updateTransactions, deleteTransaction, clearTrack, trackIsReady,
     }}
     >
       {children}

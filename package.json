@@ -42,6 +42,7 @@
     "react-hook-form": "^6.15.5",
     "recharts": "^2.0.9",
     "typeface-poppins": "^1.1.13",
+    "use-long-press": "^1.0.5",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

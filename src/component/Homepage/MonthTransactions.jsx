@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text } from '@chakra-ui/react';
 import Transaction from './Transaction';
 
-const MonthTransactions = ({ transactions }) => (
+const MonthTransactions = ({ transactions, deleteTransaction }) => (
   <Box
     h="60%"
     d="flex"
@@ -24,7 +24,15 @@ const MonthTransactions = ({ transactions }) => (
         transactions && transactions.map(({
           id, type, schedule, name, value,
         }) => (
-          <Transaction key={id} type={type} schedule={schedule} name={name} value={value} />
+          <Transaction
+            key={id}
+            id={id}
+            type={type}
+            schedule={schedule}
+            name={name}
+            value={value}
+            deleteTransaction={deleteTransaction}
+          />
         ))
     }
     </Box>

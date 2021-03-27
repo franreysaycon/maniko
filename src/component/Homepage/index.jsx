@@ -17,6 +17,7 @@ const Homepage = () => {
     after30thSalary,
     transactions,
     trackIsReady,
+    deleteTransaction,
   } = useManikoStore();
 
   useEffect(() => {
@@ -38,7 +39,7 @@ const Homepage = () => {
         after15thSalary={after15thSalary}
         after30thSalary={after30thSalary}
       />
-      <MonthTransactions transactions={transactions} />
+      <MonthTransactions transactions={transactions} deleteTransaction={deleteTransaction} />
       <MonthFooter />
     </Box>
   );
