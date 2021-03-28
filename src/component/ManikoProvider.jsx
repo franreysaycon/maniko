@@ -12,57 +12,43 @@ const SCHEDULE = {
 
 const ManikoReducer = (state, action) => {
   switch (action.type) {
-    case 'track.update':
+    case 'track.create': {
       return {
         ...state,
-        month: action.payload.month,
-        year: action.payload.year,
-        original15th: action.payload.after15thSalary,
-        original30th: action.payload.after30thSalary,
-        after15thSalary: action.payload.after15thSalary,
-        after30thSalary: action.payload.after30thSalary,
+        track: action.payload.track,
+        templates: action.payload.template
+          ? [action.payload.template, ...state.templates] : state.templates,
       };
-    case 'transaction.add': {
-      const { transaction } = action.payload;
-      const { template } = action.payload;
-
-      const newState = {
-        ...state,
-        after15thSalary:
-            transaction.schedule === SCHEDULE.after15th
-              ? +state.after15thSalary - +transaction.value : +state.after15thSalary,
-        after30thSalary:
-            transaction.schedule === SCHEDULE.after30th
-              ? +state.after30thSalary - +transaction.value : +state.after30thSalary,
-        transactions: state.transactions ? [transaction, ...state.transactions] : [transaction],
-      };
-      if (template) {
-        newState.templates = state.templates ? [template, ...state.templates] : [template];
-      }
-      return newState;
     }
-    case 'transaction.delete': {
-      const transaction = state.transactions.find((t) => t.id === action.payload.transactionId);
+    case 'track.update': {
       return {
         ...state,
-        after15thSalary:
-          transaction.schedule === SCHEDULE.after15th
-            ? +state.after15thSalary + +transaction.value : +state.after15thSalary,
-        after30thSalary:
-          transaction.schedule === SCHEDULE.after30th
-            ? +state.after30thSalary + +transaction.value : +state.after30thSalary,
-        transactions: state.transactions.filter((tran) => tran.id !== transaction.id),
+        track: {
+          ...state.track,
+          ...action.payload,
+        },
+      };
+    }
+    case 'track.delete': {
+      return {
+        ...state,
+        track: {},
+      };
+    }
+    case 'template.update': {
+      return {
+        ...state,
+        templates: state.templates.map(
+          (tmp) => (tmp.id === action.payload.templateId ? action.payload.updates : tmp),
+        ),
       };
     }
     case 'template.delete': {
-      const template = state.templates.find((t) => t.id === action.payload.templateId);
       return {
         ...state,
-        templates: state.templates.filter((temp) => temp.id !== template.id),
+        templates: state.templates.filter((temp) => temp.id !== action.payload.templateId),
       };
     }
-    case 'track.clear':
-      return {};
     default:
       return state;
   }
@@ -70,7 +56,10 @@ const ManikoReducer = (state, action) => {
 
 const prepopulateStore = () => {
   if (typeof window !== 'undefined') {
-    return JSON.parse(localStorage.getItem('store')) || {};
+    return JSON.parse(localStorage.getItem('store')) || {
+      track: {},
+      templates: [],
+    };
   }
   return {};
 };
@@ -94,44 +83,64 @@ const ManikoProvider = ({ children }) => {
     }
   }, [store]);
 
-  const clearTrack = () => {
-    dispatch({
-      type: 'track.clear',
-    });
-  };
+  const createTrack = (track) => {
+    const entry = {
+      id: uuidv4(),
+      ...track,
+      transactions: [],
+    };
+    const payload = {
+      track: entry,
+    };
 
-  const updateTrack = (payload) => {
+    if (track.isTemplate) {
+      payload.template = entry;
+    }
+
     dispatch({
-      type: 'track.update',
+      type: 'track.create',
       payload,
     });
   };
 
-  const updateTransactions = (transaction) => {
+  const deleteTrack = () => {
+    dispatch({
+      type: 'track.delete',
+    });
+  };
+
+  const createTransaction = (transaction) => {
     const entry = {
       id: uuidv4(),
       ...transaction,
     };
 
-    const payload = {
-      transaction: entry,
-    };
-
-    if (transaction.isTemplate) {
-      payload.template = entry;
-    }
+    const { after15thSalary, after30thSalary } = store.track;
 
     dispatch({
-      type: 'transaction.add',
-      payload,
+      type: 'track.update',
+      payload: {
+        transactions: [entry, ...store.track.transactions],
+        after15thSalary: transaction.schedule === SCHEDULE.after15th
+          ? after15thSalary - transaction.value : after15thSalary,
+        after30thSalary: transaction.schedule === SCHEDULE.after30th
+          ? after30thSalary - transaction.value : after30thSalary,
+      },
     });
   };
 
   const deleteTransaction = (id) => {
+    const transaction = store.track.transactions.find((tmp) => tmp.id === id);
+    const { after15thSalary, after30thSalary } = store.track;
+
     dispatch({
-      type: 'transaction.delete',
+      type: 'track.update',
       payload: {
-        transactionId: id,
+        transactions: store.track.transactions.filter((trans) => trans.id !== id),
+        after15thSalary: transaction.schedule === SCHEDULE.after15th
+          ? after15thSalary + transaction.value : after15thSalary,
+        after30thSalary: transaction.schedule === SCHEDULE.after30th
+          ? after30thSalary + transaction.value : after30thSalary,
       },
     });
   };
@@ -148,11 +157,11 @@ const ManikoProvider = ({ children }) => {
   return (
     <ManikoContext.Provider value={{
       ...store,
-      updateTrack,
-      updateTransactions,
+      createTrack,
+      createTransaction,
       deleteTransaction,
       deleteTemplate,
-      clearTrack,
+      deleteTrack,
       trackIsReady,
     }}
     >

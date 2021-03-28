@@ -3,10 +3,10 @@ import {
   Box, Button, useDisclosure, useTheme,
 } from '@chakra-ui/react';
 import { PieChart } from 'react-feather';
-import TransactionCreateModal from './TransactionCreateModal';
+import TransactionCreateModal from '../common/TransactionCreateModal';
 import StatisticsModal from './StatisticsModal';
 
-const MonthFooter = () => {
+const MonthFooter = ({ createTransaction }) => {
   const theme = useTheme();
   const transactionDisclosure = useDisclosure();
   const statisticsDisclosure = useDisclosure();
@@ -20,6 +20,7 @@ const MonthFooter = () => {
       <TransactionCreateModal
         isOpen={transactionDisclosure.isOpen}
         onClose={transactionDisclosure.onClose}
+        createTransaction={createTransaction}
       />
       <StatisticsModal
         isOpen={statisticsDisclosure.isOpen}

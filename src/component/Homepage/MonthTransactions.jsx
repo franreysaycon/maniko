@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text } from '@chakra-ui/react';
-import Transaction from './Transaction';
+import Transaction from '../common/Transaction';
 
 const MonthTransactions = ({ transactions, deleteTransaction }) => (
   <Box
