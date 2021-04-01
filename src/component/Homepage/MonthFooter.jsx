@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react';
 import { PieChart } from 'react-feather';
 import TransactionCreateModal from '../common/TransactionCreateModal';
-import StatisticsModal from './StatisticsModal';
+import StatisticsModal from '../common/StatisticsModal';
 
 const MonthFooter = ({ createTransaction }) => {
   const theme = useTheme();

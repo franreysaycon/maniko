@@ -14,7 +14,9 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 
-const FilterModal = ({ isOpen, onClose, onSubmit }) => {
+const FilterModal = ({
+  isOpen, onClose, onSubmit, reset,
+}) => {
   const {
     register, handleSubmit,
   } = useForm();
@@ -38,6 +40,7 @@ const FilterModal = ({ isOpen, onClose, onSubmit }) => {
         </ModalBody>
         <ModalFooter>
           <Button bgColor="red.100" mr={3} onClick={handleSubmit(onSubmit)} color="white" textTransform="uppercase">Apply</Button>
+          <Button bgColor="blue.100" mr={3} onClick={reset} color="white" textTransform="uppercase">Clear Filters</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

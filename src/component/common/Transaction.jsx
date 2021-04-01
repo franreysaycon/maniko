@@ -24,12 +24,12 @@ const Transaction = ({
   return (
     <Box bgColor="white" pos="relative" borderRadius="15px" d="flex" flexDir="column" p="15px" h="fit-content" {...bind}>
       <Box d="flex" justifyContent="space-between">
-        <Text fontSize="sm" color="blue.100" fontWeight="bold" textTransform="uppercase">{type}</Text>
-        <Text fontSize="sm" color="violet.100" fontWeight="bold" textTransform="uppercase">{`after ${schedule}`}</Text>
+        <Text fontSize="xs" color="blue.100" textTransform="uppercase">{type}</Text>
+        <Text fontSize="xs" color="violet.100" textTransform="uppercase">{`after ${schedule}`}</Text>
       </Box>
       <Box d="flex" justifyContent="space-between">
-        <Text textTransform="uppercase">{name}</Text>
-        <Text color="red.100" fontWeight="bold" textTransform="uppercase">{`php ${value}`}</Text>
+        <Text textTransform="uppercase" fontWeight="bold">{name}</Text>
+        <Text color="red.100" fontSize="lg" fontWeight="bold" textTransform="uppercase">{`php ${value}`}</Text>
       </Box>
       {
         openDelete && (
