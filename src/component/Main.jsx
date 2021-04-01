@@ -20,6 +20,9 @@ const theme = extendTheme({
     blue: {
       100: '#355070',
     },
+    black: {
+      100: '#222222',
+    },
   },
   fonts: {
     body: 'Poppins, sans-serif',

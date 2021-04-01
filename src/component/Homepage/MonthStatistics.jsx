@@ -10,15 +10,15 @@ const MonthStatistics = ({
       <Box flex="1" h="100%" bgColor="red.200" d="flex" alignItems="center" justifyContent="center" borderLeftRadius="15px" flexDir="column" lineHeight="1">
         <Text color="white" fontSize="xl" fontWeight="bold">{`PHP ${after30thSalary}`}</Text>
         <Text color="white" fontSize="xs" mb="10px">AFTER 30TH</Text>
-        <Text color="white" fontSize="xs">
-          {`orig: PHP ${original30th}`}
+        <Text color="white" fontSize="xs" alignSelf="flex-end" mr="5px" pos="relative" top="10px">
+          {`PHP ${original30th}`}
         </Text>
       </Box>
       <Box flex="1" h="100%" bgColor="orange.100" d="flex" alignItems="center" justifyContent="center" borderRightRadius="15px" flexDir="column" lineHeight="1">
         <Text color="white" fontSize="xl" fontWeight="bold">{`PHP ${after15thSalary}`}</Text>
         <Text color="white" fontSize="xs" mb="10px">AFTER 15TH</Text>
-        <Text color="white" fontSize="xs">
-          {`orig: PHP ${original15th}`}
+        <Text color="white" fontSize="xs" alignSelf="flex-end" mr="5px" pos="relative" top="10px">
+          {`PHP ${original15th}`}
         </Text>
       </Box>
     </Box>

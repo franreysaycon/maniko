@@ -5,6 +5,12 @@ import { motion } from 'framer-motion';
 
 const DeleteBox = motion(Box);
 
+const COLOR_MAP = {
+  cash: 'red.100',
+  credit: 'blue.100',
+  savings: 'green.400',
+};
+
 const Transaction = ({
   id, type, schedule, name, value, deleteTransaction, viewOnly, scrolling,
 }) => {
@@ -24,12 +30,12 @@ const Transaction = ({
   return (
     <Box bgColor="white" pos="relative" borderRadius="15px" d="flex" flexDir="column" p="15px" h="fit-content" {...bind}>
       <Box d="flex" justifyContent="space-between">
-        <Text fontSize="xs" color="blue.100" textTransform="uppercase">{type}</Text>
-        <Text fontSize="xs" color="violet.100" textTransform="uppercase">{`after ${schedule}`}</Text>
+        <Text fontSize="xs" textTransform="uppercase">{type}</Text>
+        <Text fontSize="xs" textTransform="uppercase">{`after ${schedule}`}</Text>
       </Box>
       <Box d="flex" justifyContent="space-between">
-        <Text textTransform="uppercase" fontWeight="bold">{name}</Text>
-        <Text color="red.100" fontSize="lg" fontWeight="bold" textTransform="uppercase">{`php ${value}`}</Text>
+        <Text color={COLOR_MAP[type]} textTransform="uppercase" fontWeight="bold">{name}</Text>
+        <Text color={COLOR_MAP[type]} fontSize="lg" fontWeight="bold" textTransform="uppercase">{`php ${value}`}</Text>
       </Box>
       {
         openDelete && (
