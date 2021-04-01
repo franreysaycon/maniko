@@ -16,8 +16,6 @@ const ManikoReducer = (state, action) => {
       return {
         ...state,
         track: action.payload.track,
-        templates: action.payload.template
-          ? [action.payload.template, ...state.templates] : state.templates,
       };
     }
     case 'track.update': {
@@ -35,18 +33,19 @@ const ManikoReducer = (state, action) => {
         track: {},
       };
     }
+    case 'template.create': {
+      return {
+        ...state,
+        template: action.payload.template,
+      };
+    }
     case 'template.update': {
       return {
         ...state,
-        templates: state.templates.map(
-          (tmp) => (tmp.id === action.payload.templateId ? action.payload.updates : tmp),
-        ),
-      };
-    }
-    case 'template.delete': {
-      return {
-        ...state,
-        templates: state.templates.filter((temp) => temp.id !== action.payload.templateId),
+        template: {
+          ...state.template,
+          ...action.payload,
+        },
       };
     }
     default:
@@ -87,19 +86,27 @@ const ManikoProvider = ({ children }) => {
     const entry = {
       id: uuidv4(),
       ...track,
-      transactions: [],
     };
-    const payload = {
-      track: entry,
-    };
-
-    if (track.isTemplate) {
-      payload.template = entry;
-    }
 
     dispatch({
       type: 'track.create',
-      payload,
+      payload: {
+        track: entry,
+      },
+    });
+  };
+
+  const createTemplate = (template) => {
+    const entry = {
+      id: uuidv4(),
+      ...template,
+    };
+
+    dispatch({
+      type: 'template.create',
+      payload: {
+        template: entry,
+      },
     });
   };
 
@@ -157,6 +164,7 @@ const ManikoProvider = ({ children }) => {
   return (
     <ManikoContext.Provider value={{
       ...store,
+      createTemplate,
       createTrack,
       createTransaction,
       deleteTransaction,
