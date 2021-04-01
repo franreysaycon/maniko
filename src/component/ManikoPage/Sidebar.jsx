@@ -63,6 +63,17 @@ const Sidebar = ({ onClose }) => {
             Template
           </Box>
         </Link>
+        <Link to="/transactions" onClick={onClose}>
+          <Box
+            p="10px 10px 10px 20px"
+            w="100%"
+            fontSize="xl"
+            color="white"
+            bgColor={(location.pathname === '/transactions') ? 'red.200' : 'red.100'}
+          >
+            Transactions
+          </Box>
+        </Link>
       </SidebarContainer>
     </Container>
   );

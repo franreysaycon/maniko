@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box } from '@chakra-ui/react';
-import { navigate } from 'gatsby-link';
 import MonthHeader from './MonthHeader';
 import MonthStatistics from './MonthStatistics';
 import MonthTransactions from './MonthTransactions';
@@ -12,20 +11,9 @@ const Homepage = () => {
   const {
     track,
     trackIsReady,
-    templateIsReady,
     deleteTransaction,
     createTransaction,
   } = useManikoStore();
-
-  useEffect(() => {
-    if (!templateIsReady) {
-      navigate('/create');
-    }
-  }, [templateIsReady]);
-
-  if (!templateIsReady) {
-    return <></>;
-  }
 
   if (!trackIsReady) {
     return <MonthTrack />;

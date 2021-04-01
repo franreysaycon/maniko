@@ -6,11 +6,13 @@ import { motion } from 'framer-motion';
 const DeleteBox = motion(Box);
 
 const Transaction = ({
-  id, type, schedule, name, value, deleteTransaction,
+  id, type, schedule, name, value, deleteTransaction, viewOnly,
 }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const bind = useLongPress(() => {
-    setOpenDelete(true);
+    if (!viewOnly) {
+      setOpenDelete(true);
+    }
   });
   const deleteThis = () => {
     deleteTransaction(id);
@@ -53,6 +55,10 @@ const Transaction = ({
       }
     </Box>
   );
+};
+
+Transaction.defaultProps = {
+  viewOnly: false,
 };
 
 export default Transaction;
