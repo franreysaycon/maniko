@@ -4,7 +4,7 @@ import {
 import React from 'react';
 
 const SalaryForm = forwardRef(({
-  error, name, label, sx,
+  error, name, label, sx, value,
 }, ref) => (
   <Box d="flex" sx={sx}>
     <FormControl>
@@ -22,7 +22,7 @@ const SalaryForm = forwardRef(({
         >
           PHP
         </Box>
-        <Input type="number" name={name} bgColor="white" borderLeftRadius="0px" ref={ref} />
+        <Input type="number" defaultValue={value} name={name} bgColor="white" borderLeftRadius="0px" ref={ref} />
       </Box>
     </FormControl>
     {error && <FormHelperText color="red.300" fontSize="xs">should be greater than 0.</FormHelperText> }

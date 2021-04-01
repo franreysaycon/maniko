@@ -54,13 +54,14 @@ const ManikoReducer = (state, action) => {
 };
 
 const prepopulateStore = () => {
-  if (typeof window !== 'undefined') {
-    return JSON.parse(localStorage.getItem('store')) || {
-      track: {},
-      templates: [],
-    };
+  if (typeof window === 'undefined') {
+    return null;
   }
-  return {};
+
+  return JSON.parse(localStorage.getItem('store')) || {
+    track: {},
+    template: {},
+  };
 };
 
 const persistStore = (store) => {
@@ -69,10 +70,28 @@ const persistStore = (store) => {
   }
 };
 
+const calculateInitialTrack = (transactions, o15thSalary, o30thSalary) => {
+  const result = {
+    after15thSalary: +o15thSalary,
+    after30thSalary: +o30thSalary,
+  };
+
+  transactions.forEach((trans) => {
+    if (trans.schedule === SCHEDULE.after15th) {
+      result.after15thSalary -= +trans.value;
+    } else if (trans.schedule === SCHEDULE.after30th) {
+      result.after30thSalary -= +trans.value;
+    }
+  });
+
+  return result;
+};
+
 const ManikoProvider = ({ children }) => {
   const [store, dispatch] = useReducer(ManikoReducer, prepopulateStore());
   const firstMount = useRef(false);
   const trackIsReady = !!store?.track?.month && !!store?.track?.year;
+  const templateIsReady = !!store?.template?.id;
 
   useEffect(() => {
     if (firstMount.current) {
@@ -86,6 +105,11 @@ const ManikoProvider = ({ children }) => {
     const template = store?.template;
     const entry = {
       ...template,
+      ...calculateInitialTrack(
+        template.transactions,
+        template.after15thSalary,
+        template.after30thSalary,
+      ),
       id: uuidv4(),
       original15th: template.after15thSalary,
       original30th: template.after30thSalary,
@@ -176,6 +200,7 @@ const ManikoProvider = ({ children }) => {
       deleteTemplate,
       deleteTrack,
       trackIsReady,
+      templateIsReady,
     }}
     >
       {children}
