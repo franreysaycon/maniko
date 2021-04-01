@@ -12,6 +12,7 @@ const AllotedTransactions = ({ transactions, deleteTransaction, openTransactionM
     <Box
       h="100%"
       d="flex"
+      mb="15px"
       overflowY="scroll"
       flexDir="column"
       css={{

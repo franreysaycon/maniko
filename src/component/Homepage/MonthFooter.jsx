@@ -12,7 +12,7 @@ const MonthFooter = ({ createTransaction }) => {
   const statisticsDisclosure = useDisclosure();
 
   return (
-    <Box h="10%" d="flex" alignItems="flex-end" justifyContent="space-evenly">
+    <Box h="12%" d="flex" alignItems="flex-end" justifyContent="space-evenly">
       <Button outline="0" bgColor="red.100" pl="80px" pr="80px" borderRadius="30px" color="white" onClick={transactionDisclosure.onOpen}>ADD</Button>
       <Box outline="0" as="button" boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;" borderColor="blue.100" borderRadius="50%" bgColor="white" p="10px">
         <PieChart color={theme.colors.blue['100']} size={20} onClick={statisticsDisclosure.onOpen} />

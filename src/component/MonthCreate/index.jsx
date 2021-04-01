@@ -39,47 +39,49 @@ const MonthCreate = ({ isEdit }) => {
   };
 
   return (
-    <Box h="100%" d="flex" flexDir="column">
-      <Text textTransform="uppercase" fontSize="xl" color="white" mb="15px">{isEdit ? 'Edit Template' : 'New Budget Template' }</Text>
-      <Box d="flex" h="12%" mb="15px" justifyContent="space-between">
-        <SalaryForm
-          value={template?.after30thSalary}
-          ref={register({ required: true, min: 1 })}
-          error={errors.after30thSalary}
-          name="after30thSalary"
-          label="30th Salary"
+    <>
+      <Box h="100%" d="flex" flexDir="column">
+        <Text textTransform="uppercase" fontSize="xl" color="white" mb="15px">{isEdit ? 'Edit Template' : 'New Budget Template' }</Text>
+        <Box d="flex" h="12%" mb="15px" justifyContent="space-between">
+          <SalaryForm
+            value={template?.after30thSalary}
+            ref={register({ required: true, min: 1 })}
+            error={errors.after30thSalary}
+            name="after30thSalary"
+            label="30th Salary"
+          />
+          <SalaryForm
+            value={template?.after15thSalary}
+            ref={register({ required: true, min: 1 })}
+            error={errors.after15thSalary}
+            name="after15thSalary"
+            label="15thSalary"
+            sx={{ marginLeft: '15px' }}
+          />
+        </Box>
+        <AllotedTransactions
+          transactions={tempTransactions}
+          deleteTransaction={deleteTransaction}
+          openTransactionModal={transactionDisclosure.onOpen}
         />
-        <SalaryForm
-          value={template?.after15thSalary}
-          ref={register({ required: true, min: 1 })}
-          error={errors.after15thSalary}
-          name="after15thSalary"
-          label="15thSalary"
-          sx={{ marginLeft: '15px' }}
-        />
+        <Button
+          textTransform="uppercase"
+          outline="0"
+          bgColor="red.100"
+          p="20px 80px 20px 80px"
+          borderRadius="30px"
+          color="white"
+          onClick={handleSubmit(onSubmit)}
+        >
+          { isEdit ? 'Save Changes' : 'Create' }
+        </Button>
       </Box>
-      <AllotedTransactions
-        transactions={tempTransactions}
-        deleteTransaction={deleteTransaction}
-        openTransactionModal={transactionDisclosure.onOpen}
-      />
       <TransactionCreateModal
         isOpen={transactionDisclosure.isOpen}
         onClose={transactionDisclosure.onClose}
         createTransaction={createTransaction}
       />
-      <Button
-        textTransform="uppercase"
-        outline="0"
-        bgColor="red.100"
-        p="20px 80px 20px 80px"
-        borderRadius="30px"
-        color="white"
-        onClick={handleSubmit(onSubmit)}
-      >
-        { isEdit ? 'Save Changes' : 'Create' }
-      </Button>
-    </Box>
+    </>
   );
 };
 

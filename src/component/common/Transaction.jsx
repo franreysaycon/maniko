@@ -13,6 +13,8 @@ const Transaction = ({
     if (!viewOnly) {
       setOpenDelete(true);
     }
+  }, {
+    threshold: 2500,
   });
   const deleteThis = () => {
     deleteTransaction(id);
