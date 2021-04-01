@@ -6,8 +6,8 @@ import { motion } from 'framer-motion';
 const DeleteBox = motion(Box);
 
 const COLOR_MAP = {
-  cash: 'red.100',
-  credit: 'blue.100',
+  cash: 'blue.100',
+  credit: 'red.100',
   savings: 'green.400',
 };
 
