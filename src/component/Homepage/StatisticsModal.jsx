@@ -47,7 +47,7 @@ const generateData = (transactions) => {
 };
 
 const StatisticsModal = ({ isOpen, onClose }) => {
-  const { after15thSalary, after30thSalary, transactions } = useManikoStore();
+  const { track } = useManikoStore();
   const theme = useTheme();
 
   const RADIAN = Math.PI / 180;
@@ -66,7 +66,7 @@ const StatisticsModal = ({ isOpen, onClose }) => {
     );
   };
 
-  const data = generateData(transactions);
+  const data = generateData(track.transactions);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -104,7 +104,7 @@ const StatisticsModal = ({ isOpen, onClose }) => {
           }
           <Box textTransform="uppercase" fontSize="md" color="red.100" mt="15px">
             Total Budget Left:
-            <Box as="text" fontWeight="bold">{` PHP ${+after15thSalary + +after30thSalary}`}</Box>
+            <Box as="text" fontWeight="bold">{` PHP ${+track.after15thSalary + +track.after30thSalary}`}</Box>
           </Box>
         </ModalBody>
         <ModalFooter>
