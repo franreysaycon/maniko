@@ -72,7 +72,7 @@ const persistStore = (store) => {
 const ManikoProvider = ({ children }) => {
   const [store, dispatch] = useReducer(ManikoReducer, prepopulateStore());
   const firstMount = useRef(false);
-  const trackIsReady = !!store.month && !!store.year;
+  const trackIsReady = !!store?.track?.month && !!store?.track?.year;
 
   useEffect(() => {
     if (firstMount.current) {
@@ -82,10 +82,15 @@ const ManikoProvider = ({ children }) => {
     }
   }, [store]);
 
-  const createTrack = (track) => {
+  const createTrack = (month, year) => {
+    const template = store?.template;
     const entry = {
+      ...template,
       id: uuidv4(),
-      ...track,
+      original15th: template.after15thSalary,
+      original30th: template.after30thSalary,
+      month,
+      year,
     };
 
     dispatch({

@@ -13,7 +13,7 @@ import SalaryForm from './SalaryForm';
 const MonthCreate = () => {
   const { createTemplate, template } = useManikoStore();
   const transactionDisclosure = useDisclosure();
-  const [tempTransactions, setTempTransactions] = useState([]);
+  const [tempTransactions, setTempTransactions] = useState(template?.transactions || []);
   const createTransaction = (transaction) => {
     const entry = {
       id: uuidv4(),
@@ -34,6 +34,7 @@ const MonthCreate = () => {
       after30thSalary: +after30thSalary,
       transactions: tempTransactions,
     });
+
     navigate('/');
   };
 
@@ -41,14 +42,13 @@ const MonthCreate = () => {
     <Box h="100%" d="flex" flexDir="column">
       <Text textTransform="uppercase" fontSize="xl" color="white" mb="15px">NEW BUDGET TEMPLATE</Text>
       <Box d="flex" h="12%" mb="15px" justifyContent="space-between">
-        <SalaryForm ref={register({ required: true, min: 1 })} error={errors.after30thSalary} name="after30thSalary" label="30th Salary" />
-        <SalaryForm ref={register({ required: true, min: 1 })} error={errors.after15thSalary} name="after15thSalary" label="15th Salary" sx={{ marginLeft: '15px' }} />
+        <SalaryForm value={template.after30thSalary} ref={register({ required: true, min: 1 })} error={errors.after30thSalary} name="after30thSalary" label="30th Salary" />
+        <SalaryForm value={template.after15thSalary} ref={register({ required: true, min: 1 })} error={errors.after15thSalary} name="after15thSalary" label="15th Salary" sx={{ marginLeft: '15px' }} />
       </Box>
       <AllotedTransactions
         transactions={tempTransactions}
         deleteTransaction={deleteTransaction}
         openTransactionModal={transactionDisclosure.onOpen}
-        template={template}
       />
       <TransactionCreateModal
         isOpen={transactionDisclosure.isOpen}

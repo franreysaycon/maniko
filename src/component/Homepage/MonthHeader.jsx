@@ -2,17 +2,15 @@ import React from 'react';
 import {
   Box, Button, Text, useDisclosure,
 } from '@chakra-ui/react';
-import { navigate } from 'gatsby-link';
 import FinishModal from './FinishModal';
 import { useManikoStore } from '../ManikoProvider';
 
 const MonthHeader = ({ month, year }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { clearTrack } = useManikoStore();
+  const { deleteTrack } = useManikoStore();
 
   const handleFinish = () => {
-    clearTrack();
-    navigate('/create');
+    deleteTrack();
   };
 
   return (
