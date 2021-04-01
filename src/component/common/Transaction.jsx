@@ -6,19 +6,21 @@ import { motion } from 'framer-motion';
 const DeleteBox = motion(Box);
 
 const Transaction = ({
-  id, type, schedule, name, value, deleteTransaction, viewOnly,
+  id, type, schedule, name, value, deleteTransaction, viewOnly, scrolling,
 }) => {
   const [openDelete, setOpenDelete] = useState(false);
+
   const bind = useLongPress(() => {
-    if (!viewOnly) {
+    if (!viewOnly && !scrolling) {
       setOpenDelete(true);
     }
   }, {
-    threshold: 2500,
+    threshold: 500,
   });
   const deleteThis = () => {
     deleteTransaction(id);
   };
+
   return (
     <Box bgColor="white" pos="relative" borderRadius="15px" d="flex" flexDir="column" p="15px" h="fit-content" {...bind}>
       <Box d="flex" justifyContent="space-between">
