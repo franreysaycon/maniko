@@ -1,3 +1,8 @@
-import Templates from '../component/Templates';
+import React from 'react';
+import MonthCreate from "../component/MonthCreate";
 
-export default Templates;
+const EditTemplate = () => (
+    <MonthCreate isEdit={true} />
+)
+
+export default EditTemplate;

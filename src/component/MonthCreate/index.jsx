@@ -10,7 +10,7 @@ import { useManikoStore } from '../ManikoProvider';
 import AllotedTransactions from './AllotedTransactions';
 import SalaryForm from './SalaryForm';
 
-const MonthCreate = () => {
+const MonthCreate = ({ isEdit }) => {
   const { createTemplate, template } = useManikoStore();
   const transactionDisclosure = useDisclosure();
   const [tempTransactions, setTempTransactions] = useState(template?.transactions || []);
@@ -40,10 +40,23 @@ const MonthCreate = () => {
 
   return (
     <Box h="100%" d="flex" flexDir="column">
-      <Text textTransform="uppercase" fontSize="xl" color="white" mb="15px">NEW BUDGET TEMPLATE</Text>
+      <Text textTransform="uppercase" fontSize="xl" color="white" mb="15px">{isEdit ? 'Edit Template' : 'New Budget Template' }</Text>
       <Box d="flex" h="12%" mb="15px" justifyContent="space-between">
-        <SalaryForm value={template.after30thSalary} ref={register({ required: true, min: 1 })} error={errors.after30thSalary} name="after30thSalary" label="30th Salary" />
-        <SalaryForm value={template.after15thSalary} ref={register({ required: true, min: 1 })} error={errors.after15thSalary} name="after15thSalary" label="15th Salary" sx={{ marginLeft: '15px' }} />
+        <SalaryForm
+          value={template?.after30thSalary}
+          ref={register({ required: true, min: 1 })}
+          error={errors.after30thSalary}
+          name="after30thSalary"
+          label="30th Salary"
+        />
+        <SalaryForm
+          value={template?.after15thSalary}
+          ref={register({ required: true, min: 1 })}
+          error={errors.after15thSalary}
+          name="after15thSalary"
+          label="15thSalary"
+          sx={{ marginLeft: '15px' }}
+        />
       </Box>
       <AllotedTransactions
         transactions={tempTransactions}
@@ -59,16 +72,19 @@ const MonthCreate = () => {
         textTransform="uppercase"
         outline="0"
         bgColor="red.100"
-        pl="80px"
-        pr="80px"
+        p="20px 80px 20px 80px"
         borderRadius="30px"
         color="white"
         onClick={handleSubmit(onSubmit)}
       >
-        Create
+        { isEdit ? 'Save Changes' : 'Create' }
       </Button>
     </Box>
   );
+};
+
+MonthCreate.defaultProps = {
+  isEdit: false,
 };
 
 export default MonthCreate;

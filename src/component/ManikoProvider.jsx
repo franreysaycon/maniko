@@ -39,15 +39,6 @@ const ManikoReducer = (state, action) => {
         template: action.payload.template,
       };
     }
-    case 'template.update': {
-      return {
-        ...state,
-        template: {
-          ...state.template,
-          ...action.payload,
-        },
-      };
-    }
     default:
       return state;
   }
@@ -55,7 +46,7 @@ const ManikoReducer = (state, action) => {
 
 const prepopulateStore = () => {
   if (typeof window === 'undefined') {
-    return null;
+    return {};
   }
 
   return JSON.parse(localStorage.getItem('store')) || {

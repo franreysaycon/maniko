@@ -47,14 +47,21 @@ const Sidebar = ({ onClose }) => {
             w="100%"
             fontSize="xl"
             color="white"
-            bgColor={(location.pathname === '/' || location.pathname === '/create') ? 'red.200' : 'red.100'}
+            bgColor={(location.pathname === '/') ? 'red.200' : 'red.100'}
           >
             Home
-
           </Box>
         </Link>
         <Link to="/templates" onClick={onClose}>
-          <Box p="10px 10px 10px 20px" w="100%" fontSize="xl" color="white" bgColor={location.pathname === '/templates' ? 'red.200' : 'red.100'}>Template</Box>
+          <Box
+            p="10px 10px 10px 20px"
+            w="100%"
+            fontSize="xl"
+            color="white"
+            bgColor={(location.pathname === '/templates' || location.pathname === '/create') ? 'red.200' : 'red.100'}
+          >
+            Template
+          </Box>
         </Link>
       </SidebarContainer>
     </Container>
