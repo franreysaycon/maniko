@@ -55,7 +55,7 @@ const MonthCreate = ({ isEdit }) => {
             ref={register({ required: true, min: 1 })}
             error={errors.after15thSalary}
             name="after15thSalary"
-            label="15thSalary"
+            label="15th Salary"
             sx={{ marginLeft: '15px' }}
           />
         </Box>

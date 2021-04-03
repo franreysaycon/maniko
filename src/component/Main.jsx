@@ -33,7 +33,8 @@ const theme = extendTheme({
     global: {
       body: {
         userSelect: 'none',
-        '-webkit-touch-callout': 'none',
+        WebkitTouchCallout: 'none',
+        position: 'relative',
       },
     },
   },
